@@ -1,19 +1,23 @@
-{% comment %} <form method="post">
+<form method="post">
+    {% csrf_token %}
     <input type="text" name="first_name" value="Bahman" autofocus>
     <input type="text" name="last_name">
-    <input type="email" name="email" placeholder="What is your email address?" required>
-
+    <input type="email" name="email" 
+        {% if sample_form.email.value %}value="{{ sample_form.email.value }}"{% endif %}
+        placeholder="What is your email address?"
+        {% if sample_form.fields.email.required %}required{% endif %}
+    >
     <button type="submit">Submit</button>
-</form> {% endcomment %}
+</form>
 
 {% if submitted %}
 <p>Submitted the form successfully.</p>
 {% endif %}
 
-<form method="post">
+{% comment %} <form method="post">
     {% csrf_token %}
 
     {{ sample_form }}
 
     <button type="submit">Submit</button>
-</form>
+</form> {% endcomment %}
