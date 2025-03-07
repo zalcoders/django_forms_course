@@ -918,7 +918,6 @@
       .success-animation {
         text-align: center;
         padding: 2rem;
-        display: none;
       }
       
       .success-icon {
@@ -1176,6 +1175,7 @@
                 </div>
               </div>
 
+              {% if not success and not errors %}
               <form id="businessCardForm" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- Step 1: Personal Information -->
@@ -1399,17 +1399,22 @@
                     <button type="submit" class="btn btn-primary">Create My Business Card <i class="fas fa-check ms-2"></i></button>
                   </div>
                 </div>
-
-                <!-- Success Animation -->
-                <div class="success-animation" id="successAnimation">
-                  <div class="success-icon">
-                    <i class="fas fa-check"></i>
-                  </div>
-                  <h3 class="success-text">Your Business Card is Ready!</h3>
-                  <p class="success-subtext">Your digital presence is now live and ready to share</p>
-                  <button type="button" class="btn btn-primary">View My Business Card <i class="fas fa-external-link-alt ms-2"></i></button>
-                </div>
               </form>
+              {% elif not errors %}
+              <!-- Success Animation -->
+              <div class="success-animation" id="successAnimation">
+                <div class="success-icon">
+                  <i class="fas fa-check"></i>
+                </div>
+                <h3 class="success-text">Your Business Card is Ready!</h3>
+                <p class="success-subtext">Your digital presence is now live and ready to share</p>
+                <button type="button" class="btn btn-primary">View My Business Card <i class="fas fa-external-link-alt ms-2"></i></button>
+              </div>
+              {% else %}
+                {{ errors }}
+
+                <a href="{% url 'business_card:business_card_create' %}">Start new</a>
+              {% endif %}
             </div>
           </div>
 
@@ -1587,19 +1592,6 @@
             }, 300)
           }, 3000)
         }
-      
-        // Form submission
-        {% comment %} document.getElementById('businessCardForm').addEventListener('submit', function (e) {
-          e.preventDefault()
-      
-          // Hide the form steps
-          document.querySelectorAll('.form-step').forEach((step) => {
-            step.style.display = 'none'
-          })
-      
-          // Show success animation
-          document.getElementById('successAnimation').style.display = 'block'
-        }) {% endcomment %}
       
         // Password visibility toggle
         document.getElementById('togglePassword').addEventListener('click', function () {

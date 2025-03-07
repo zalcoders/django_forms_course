@@ -8,17 +8,17 @@ def business_card(request):
 
 def business_card_create(request):
     business_card = BusinessCardForm()
-    submitted = False
+    success = False
+    errors = []
     if request.method == "POST":
         business_card = BusinessCardForm(request.POST, request.FILES)
         if business_card.is_valid():
-            print(business_card.cleaned_data)
             BusinessCard(**business_card.cleaned_data).save()
-            submitted = True
+            success = True
         else:
-            print(business_card.errors)
+            errors = business_card.errors
 
-    return render(request, 'business_card/business_card_create.html', {"business_card": business_card, "submitted": submitted})
+    return render(request, 'business_card/business_card_create.html', {"business_card": business_card, "success": success, "errors": errors})
 
 def business_card_update(request):
     return render(request, 'business_card/business_card_update.html')
