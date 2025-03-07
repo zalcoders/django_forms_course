@@ -1,22 +1,24 @@
 from django.shortcuts import render
-from business_card.forms import SampleForm
+from business_card.forms import BusinessCardForm
+from business_card.models import BusinessCard
 
 
 def business_card(request):
     return render(request, 'business_card/business_card.html')
 
 def business_card_create(request):
-    sample_form = SampleForm()
+    business_card = BusinessCardForm()
     submitted = False
     if request.method == "POST":
-        sample_form = SampleForm(request.POST)
-        if sample_form.is_valid():
-            print(sample_form.cleaned_data)
-            print(dir(sample_form.fields["email"]))
-            print(sample_form.fields["email"].required)
+        business_card = BusinessCardForm(request.POST, request.FILES)
+        if business_card.is_valid():
+            print(business_card.cleaned_data)
+            BusinessCard(**business_card.cleaned_data).save()
             submitted = True
+        else:
+            print(business_card.errors)
 
-    return render(request, 'business_card/business_card_create.html', {"sample_form": sample_form, "submitted": submitted})
+    return render(request, 'business_card/business_card_create.html', {"business_card": business_card, "submitted": submitted})
 
 def business_card_update(request):
     return render(request, 'business_card/business_card_update.html')

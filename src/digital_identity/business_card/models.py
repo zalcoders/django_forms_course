@@ -10,7 +10,6 @@ class BusinessCard(models.Model):
     job_title = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     phone_number = models.CharField(max_length=50)
-    first_name = models.CharField(max_length=50)
     business_name = models.CharField(max_length=50)
     website = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
@@ -23,3 +22,4 @@ class BusinessCard(models.Model):
     password = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    marcketing_check = models.BooleanField()
