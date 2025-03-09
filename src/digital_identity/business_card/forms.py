@@ -56,8 +56,9 @@ class BusinessCardForm(forms.Form):
     landline_number = forms.CharField(max_length=100, required=False)
     business_name = forms.CharField(max_length=100, required=False)
     website = forms.CharField(max_length=100, required=False)
-    address = forms.CharField(max_length=100, required=False)
-    description = forms.TextInput()
+    address = forms.Textarea()
+    description = forms.Textarea()
+    category = forms.CharField(max_length=512, required=False)
     linkedin_profile = forms.CharField(max_length=100, required=False)
     x_profile = forms.CharField(max_length=100, required=False)
     instagram_profile = forms.CharField(max_length=100, required=False)
@@ -72,6 +73,14 @@ class BusinessCardForm(forms.Form):
             mobile = validate_and_normalize_irani_mobile_phone(mobile)
         return mobile
     
+    def clean_category(self):
+        category = self.cleaned_data["category"]
+        if category.endswith(","):
+            category = category[:-1]
+
+        return category
+    
+
     def clean(self):
         cleaned_data = super().clean()
         landline_number = cleaned_data.get("landline_number", None)

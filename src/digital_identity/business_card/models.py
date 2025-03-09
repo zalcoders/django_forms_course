@@ -15,6 +15,7 @@ class BusinessCard(models.Model):
     website = models.CharField(max_length=254)
     address = models.CharField(max_length=254)
     description = models.TextField()
+    category = models.CharField(max_length=512)
     linkedin_profile = models.CharField(max_length=254)
     x_profile = models.CharField(max_length=254)
     instagram_profile = models.CharField(max_length=254)

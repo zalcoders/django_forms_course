@@ -660,10 +660,9 @@
               <p class="business-description">{{ business_card.description }}</p>
 
               <div class="tags-container">
-                <div class="tag">Marketing</div>
-                <div class="tag">Technology</div>
-                <div class="tag">Consulting</div>
-                <div class="tag">Digital</div>
+                {% for tag in categories %}
+                <div class="tag">{{ tag }}</div>
+                {% endfor %}
               </div>
 
               <button class="flip-button" id="flipBackButton"><i class="fas fa-sync-alt"></i></button>

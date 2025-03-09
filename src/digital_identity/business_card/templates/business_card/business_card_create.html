@@ -1293,10 +1293,17 @@
                       <label class="form-label d-block">Business Categories</label>
                       <div class="input-group">
                         <input type="text" class="form-control" id="categoryInput" placeholder="Add business categories (e.g. Technology, Retail)" />
-                        <input type="hidden" name="category" id="mainCategoryInput">
+                        <input type="hidden" name="category" id="mainCategoryInput" {% if business_card.category.value %}value="{{business_card.category.value}}"{% endif %}>
                         <button class="btn btn-outline-primary" type="button" id="addCategory"><i class="fas fa-plus"></i></button>
                       </div>
-                      <div class="tag-container" id="categoriesContainer"></div>
+                      <div class="tag-container" id="categoriesContainer">
+                        {% for tag in categories %}
+                        <div class="tag">
+                          {{ tag }}
+                          <span class="remove-tag"><i class="fas fa-times"></i></span>
+                        </div>
+                        {% endfor %}
+                      </div>
                     </div>
                   </div>
 
@@ -1722,20 +1729,12 @@
         // Add category tags and sync with preview
         document.getElementById('addCategory').addEventListener('click', function () {
           const input = document.getElementById('categoryInput');
-          const mainInput = document.getElementById('mainCategoryInput');
+          
           const category = input.value.trim()
       
           if (category) {
             addCategoryTag(category)
             input.value = ''
-            old = mainInput.value
-            if (old === ""){
-              new_value = category
-            } else {
-              new_value = old + "," + category
-            }
-            
-            mainInput.value = new_value
             updateCategoryPreview()
           }
         })
@@ -1746,6 +1745,22 @@
             document.getElementById('addCategory').click()
           }
         })
+
+        function updatemainCategoryInputValue(container){
+          console.log(container);
+          tags = container.getElementsByTagName("div");
+          console.log(tags);
+          final = "";
+          for(var i = 0; i < tags.length; i++){
+            tag = tags[i];
+            console.log(tag);
+            console.log(tag.innerText);
+            final += tag.innerText + ",";
+          }
+          const mainInput = document.getElementById('mainCategoryInput');
+          mainInput.value = final;
+
+        }
       
         function addCategoryTag(category) {
           const container = document.getElementById('categoriesContainer')
@@ -1759,9 +1774,12 @@
           tag.querySelector('.remove-tag').addEventListener('click', function () {
             tag.remove()
             updateCategoryPreview()
+            updatemainCategoryInputValue(container);
           })
       
           container.appendChild(tag)
+
+          updatemainCategoryInputValue(container);
         }
       
         function updateCategoryPreview() {
