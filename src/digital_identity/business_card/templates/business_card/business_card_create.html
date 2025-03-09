@@ -1292,7 +1292,8 @@
                     <div class="mb-3">
                       <label class="form-label d-block">Business Categories</label>
                       <div class="input-group">
-                        <input type="text" name="category" class="form-control" id="categoryInput" placeholder="Add business categories (e.g. Technology, Retail)" />
+                        <input type="text" class="form-control" id="categoryInput" placeholder="Add business categories (e.g. Technology, Retail)" />
+                        <input type="hidden" name="category" id="mainCategoryInput">
                         <button class="btn btn-outline-primary" type="button" id="addCategory"><i class="fas fa-plus"></i></button>
                       </div>
                       <div class="tag-container" id="categoriesContainer"></div>
@@ -1425,7 +1426,9 @@
                 </div>
                 <h3 class="success-text">Your Business Card is Ready!</h3>
                 <p class="success-subtext">Your digital presence is now live and ready to share</p>
-                <button type="button" class="btn btn-primary">View My Business Card <i class="fas fa-external-link-alt ms-2"></i></button>
+                <a href="{%  url 'business_card:business_card' obj.slug %}" target="_blank">
+                  <button type="button" class="btn btn-primary">View My Business Card <i class="fas fa-external-link-alt ms-2"></i></button>
+                </a>
               </div>
               {% endif %}
             </div>
@@ -1718,12 +1721,21 @@
       
         // Add category tags and sync with preview
         document.getElementById('addCategory').addEventListener('click', function () {
-          const input = document.getElementById('categoryInput')
+          const input = document.getElementById('categoryInput');
+          const mainInput = document.getElementById('mainCategoryInput');
           const category = input.value.trim()
       
           if (category) {
             addCategoryTag(category)
             input.value = ''
+            old = mainInput.value
+            if (old === ""){
+              new_value = category
+            } else {
+              new_value = old + "," + category
+            }
+            
+            mainInput.value = new_value
             updateCategoryPreview()
           }
         })
