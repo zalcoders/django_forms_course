@@ -10,6 +10,7 @@ class BusinessCard(models.Model):
     job_title = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     phone_number = models.CharField(max_length=50)
+    landline_number = models.CharField(max_length=50)
     business_name = models.CharField(max_length=50)
     website = models.CharField(max_length=254)
     address = models.CharField(max_length=254)

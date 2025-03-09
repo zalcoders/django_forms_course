@@ -1175,7 +1175,16 @@
                 </div>
               </div>
 
-              {% if not success and not errors %}
+              {% if errors %}
+              {% for error_field, error_message in business_card.errors.items %}
+              <div class="alert alert-danger" role="alert">
+                {{ error_field }}: {{ error_message.as_text }}
+              </div>
+              {{ errors.as_p }}
+              {% endfor %}
+              {% endif %}
+
+              {% if not success %}
               <form id="businessCardForm" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- Step 1: Personal Information -->
@@ -1201,24 +1210,24 @@
                     <div class="row mb-3">
                       <div class="col-md-6 mb-3 mb-md-0">
                         <label for="firstName" class="form-label">First Name*</label>
-                        <input type="text" name="first_name" class="form-control" id="firstName" placeholder="Enter first name" required />
+                        <input type="text" {% if business_card.first_name.value %}value="{{business_card.first_name.value}}"{% endif %} name="first_name" class="form-control" id="firstName" placeholder="Enter first name" required />
                       </div>
                       <div class="col-md-6">
                         <label for="lastName" class="form-label">Last Name*</label>
-                        <input type="text" name="last_name" class="form-control" id="lastName" placeholder="Enter last name" required />
+                        <input type="text" {% if business_card.last_name.value %}value="{{business_card.last_name.value}}"{% endif %} name="last_name" class="form-control" id="lastName" placeholder="Enter last name" required />
                       </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="jobTitle" class="form-label">Job Title*</label>
-                      <input type="text" name="job_title" class="form-control" id="jobTitle" placeholder="e.g. Marketing Director, CEO, Consultant" required />
+                      <input type="text" {% if business_card.job_title.value %}value="{{business_card.job_title.value}}"{% endif %} name="job_title" class="form-control" id="jobTitle" placeholder="e.g. Marketing Director, CEO, Consultant" required />
                     </div>
 
                     <div class="mb-3">
                       <label for="email" class="form-label">Email Address*</label>
                       <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="your@email.com" required />
+                        <input type="email" {% if business_card.email.value %}value="{{business_card.email.value}}"{% endif %} name="email" class="form-control" id="email" placeholder="your@email.com" required />
                       </div>
                     </div>
 
@@ -1226,7 +1235,7 @@
                       <label for="phone" class="form-label">Phone Number</label>
                       <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        <input type="tel" name="phone_number" class="form-control" id="phone" placeholder="(123) 456-7890" />
+                        <input type="tel" {% if business_card.phone_number.value %}value="{{business_card.phone_number.value}}"{% endif %} name="phone_number" class="form-control" id="phone" placeholder="(123) 456-7890" />
                       </div>
                     </div>
 
@@ -1234,7 +1243,7 @@
                       <label for="landline_number" class="form-label">Land Line Number</label>
                       <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                        <input type="tel" name="landline_number" class="form-control" id="landline_number" placeholder="(123) 456-7890" />
+                        <input type="tel" {% if business_card.landline_number.value %}value="{{business_card.landline_number.value}}"{% endif %} name="landline_number" class="form-control" id="landline_number" placeholder="(123) 456-7890" />
                       </div>
                     </div>
                   </div>
@@ -1256,25 +1265,25 @@
 
                     <div class="mb-3">
                       <label for="businessName" class="form-label">Business Name*</label>
-                      <input type="text" name="business_name" class="form-control" id="businessName" placeholder="Enter your business name" required />
+                      <input type="text" {% if business_card.business_name.value %}value="{{business_card.business_name.value}}"{% endif %} name="business_name" class="form-control" id="businessName" placeholder="Enter your business name" required />
                     </div>
 
                     <div class="mb-3">
                       <label for="website" class="form-label">Website</label>
                       <div class="input-group">
                         <span class="input-group-text"><i class="fas fa-globe"></i></span>
-                        <input type="url" name="website" class="form-control" id="website" placeholder="https://your-website.com" />
+                        <input type="url" {% if business_card.website.value %}value="{{business_card.website.value}}"{% endif %} name="website" class="form-control" id="website" placeholder="https://your-website.com" />
                       </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="businessAddress" class="form-label">Business Address</label>
-                      <textarea name="address" class="form-control" id="businessAddress" rows="2" placeholder="Enter your business address"></textarea>
+                      <textarea name="address" {% if business_card.address.value %}value="{{business_card.address.value}}"{% endif %} class="form-control" id="businessAddress" rows="2" placeholder="Enter your business address"></textarea>
                     </div>
 
                     <div class="mb-3">
                       <label for="businessDescription" class="form-label">Business Description</label>
-                      <textarea name="description" class="form-control" id="businessDescription" rows="3" placeholder="Brief description of your business or services"></textarea>
+                      <textarea name="description" {% if business_card.description.value %}value="{{business_card.description.value}}"{% endif %} class="form-control" id="businessDescription" rows="3" placeholder="Brief description of your business or services"></textarea>
                       <div class="form-text text-end">
                         <span id="descriptionCount">0</span>/250
                       </div>
@@ -1310,7 +1319,7 @@
                       <label for="linkedin" class="form-label">LinkedIn Profile</label>
                       <div class="input-group">
                         <span class="input-group-text social-icon social-linkedin"><i class="fab fa-linkedin-in"></i></span>
-                        <input type="url" name="linkedin_profile" class="form-control" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/your-profile" />
+                        <input type="url" {% if business_card.linkedin_profile.value %}value="{{business_card.linkedin_profile.value}}"{% endif %} name="linkedin_profile" class="form-control" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/your-profile" />
                       </div>
                     </div>
 
@@ -1318,7 +1327,7 @@
                       <label for="twitter" class="form-label">X / Twitter Profile</label>
                       <div class="input-group">
                         <span class="input-group-text social-icon social-twitter"><i class="fab fa-x-twitter"></i></span>
-                        <input type="text" name="x_profile" class="form-control" id="twitter" name="twitter" placeholder="@yourusername" />
+                        <input type="text" {% if business_card.x_profile.value %}value="{{business_card.x_profile.value}}"{% endif %} name="x_profile" class="form-control" id="twitter" name="twitter" placeholder="@yourusername" />
                       </div>
                     </div>
 
@@ -1326,7 +1335,7 @@
                       <label for="instagram" class="form-label">Instagram Profile</label>
                       <div class="input-group">
                         <span class="input-group-text social-icon social-instagram"><i class="fab fa-instagram"></i></span>
-                        <input type="text" name="instagram_profile" class="form-control" id="instagram" name="instagram" placeholder="@yourusername" />
+                        <input type="text" {% if business_card.instagram_profile.value %}value="{{business_card.instagram_profile.value}}"{% endif %} name="instagram_profile" class="form-control" id="instagram" name="instagram" placeholder="@yourusername" />
                       </div>
                     </div>
 
@@ -1334,7 +1343,7 @@
                       <label class="form-label d-flex justify-content-between align-items-center">
                         <span>Add QR Code to Card</span>
                         <label class="toggle-button">
-                          <input type="checkbox" name="needs_qr" id="qrCodeToggle" />
+                          <input type="checkbox" {% if business_card.needs_qr.value %}checked{% endif %} name="needs_qr" id="qrCodeToggle" />
                           <span class="toggle-slider"></span>
                         </label>
                       </label>
@@ -1362,7 +1371,7 @@
                       <label for="username" class="form-label">Username*</label>
                       <div class="input-group">
                         <span class="input-group-text">@</span>
-                        <input type="text" name="username" class="form-control" id="username" placeholder="Choose a username" required />
+                        <input type="text" {% if business_card.username.value %}value="{{business_card.username.value}}"{% endif %} name="username" class="form-control" id="username" placeholder="Choose a username" required />
                       </div>
                       <div class="form-text">
                         This will be your unique URL: domain.com/<span id="usernamePreview">username</span>
@@ -1396,7 +1405,7 @@
 
                     <div class="mb-3">
                       <div class="form-check">
-                        <input class="form-check-input" name="marcketing_check" type="checkbox" id="marketingCheck" />
+                        <input class="form-check-input" {% if business_card.marcketing_check.value %}checked{% endif %} name="marcketing_check" type="checkbox" id="marketingCheck" />
                         <label class="form-check-label" for="marketingCheck">Send me tips on how to make the most of my digital business card</label>
                       </div>
                     </div>
@@ -1408,7 +1417,7 @@
                   </div>
                 </div>
               </form>
-              {% elif not errors %}
+              {% else %}
               <!-- Success Animation -->
               <div class="success-animation" id="successAnimation">
                 <div class="success-icon">
@@ -1418,10 +1427,6 @@
                 <p class="success-subtext">Your digital presence is now live and ready to share</p>
                 <button type="button" class="btn btn-primary">View My Business Card <i class="fas fa-external-link-alt ms-2"></i></button>
               </div>
-              {% else %}
-                {{ errors }}
-
-                <a href="{% url 'business_card:business_card_create' %}">Start new</a>
               {% endif %}
             </div>
           </div>

@@ -18,6 +18,7 @@ def business_card_create(request):
         else:
             errors = business_card.errors
 
+
     return render(request, 'business_card/business_card_create.html', {"business_card": business_card, "success": success, "errors": errors})
 
 def business_card_update(request):
