@@ -1530,8 +1530,9 @@
             const firstName = document.getElementById('firstName').value
             const lastName = document.getElementById('lastName').value
             const email = document.getElementById('email').value
+            const jobTitle = document.getElementById('jobTitle').value
       
-            if (!firstName || !lastName || !email) {
+            if (!firstName || !lastName || !email || !jobTitle) {
               showValidationError('Please fill in all required fields')
               return false
             }

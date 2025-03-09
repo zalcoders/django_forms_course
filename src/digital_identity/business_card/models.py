@@ -20,7 +20,7 @@ class BusinessCard(models.Model):
     x_profile = models.CharField(max_length=254)
     instagram_profile = models.CharField(max_length=254)
     needs_qr = models.BooleanField()
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True, default=uuid4)
     password = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 import re
+from business_card.models import BusinessCard
+from django.contrib.auth.hashers import make_password
 
 
 def normalize_persian_digits(mobile):
@@ -56,8 +58,8 @@ class BusinessCardForm(forms.Form):
     landline_number = forms.CharField(max_length=100, required=False)
     business_name = forms.CharField(max_length=100, required=False)
     website = forms.CharField(max_length=100, required=False)
-    address = forms.Textarea()
-    description = forms.Textarea()
+    address = forms.CharField()
+    description = forms.CharField()
     category = forms.CharField(max_length=512, required=False)
     linkedin_profile = forms.CharField(max_length=100, required=False)
     x_profile = forms.CharField(max_length=100, required=False)

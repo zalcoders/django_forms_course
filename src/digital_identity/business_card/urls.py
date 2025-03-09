@@ -5,5 +5,5 @@ app_name = 'business_card'
 urlpatterns = [
     path('<slug:slug>', business_card, name='business_card'),
     path('create/', business_card_create, name='business_card_create'),
-    path('update/', business_card_update, name='business_card_update'),
+    path('update/<slug:slug>/', business_card_update, name='business_card_update'),
 ]
