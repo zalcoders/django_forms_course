@@ -1,5 +1,21 @@
 from django import forms
-from newsletter.models import Subscription
+from newsletter.models import Subscription, Interest
+
+
+class InterestWidget(forms.CheckboxSelectMultiple):
+    template_name = "forms/interests_input.html"
+
+    def get_context(self, *args, **kwargs):
+        context = super().get_context(*args, **kwargs)
+
+        icon_map = {}
+        data = Interest.objects.all().values("icon_class", "title")
+        for d in data:
+            icon_map[d["title"]] = d["icon_class"]
+
+        context["icon_map"] = icon_map
+        return context
+
 
 
 class SubscriptionModelForm(forms.ModelForm):
@@ -10,7 +26,6 @@ class SubscriptionModelForm(forms.ModelForm):
         self.fields['last_name'].widget.template_name = "forms/text_input.html"
         self.fields['email'].widget.template_name = "forms/email_input.html"
         self.fields['agreed_to_poicies'].widget.template_name = "forms/boolean_input.html"
-        self.fields['interests'].widget.template_name = "forms/interests_input.html"
 
         self.renderer.form_template_name = "forms/newsletter_form.html"
 
@@ -38,5 +53,5 @@ class SubscriptionModelForm(forms.ModelForm):
                 'class': 'form-check-input',
                 'custom_label': "I agree to the Privacy Policy and consent to receive emails."
             }),
-            'interests': forms.CheckboxSelectMultiple()
+            'interests': InterestWidget()
         }
