@@ -4,7 +4,8 @@ from newsletter.models import Subscription
 
 
 def index(request):
-    return render(request, "newsletter/index.html")
+    form = SubscriptionModelForm()
+    return render(request, "newsletter/index.html", {"form": form})
 
 
 def test_view(request):

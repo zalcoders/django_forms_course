@@ -1,0 +1,14 @@
+<div class="mb-3">
+  <label for="{{ widget.attrs.id }}" class="form-label">{{ widget.attrs.custom_label }}</label>
+  {% include "django/forms/widgets/input.html" %}
+
+  {% if errors %}
+    <div class="text-danger mt-1">
+        {{ errors }}
+    </div>
+  {% endif %}
+
+  {% if help_text %}
+  <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+</div>

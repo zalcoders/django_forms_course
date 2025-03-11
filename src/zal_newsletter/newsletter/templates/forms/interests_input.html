@@ -1,0 +1,22 @@
+<label class="form-label">What topics interest you?</label>
+<div class="interest-grid">
+    {% for group, options, index in widget.optgroups %}
+    {% for option in options %}
+    <div class="custom-checkbox">
+        <input type="checkbox" 
+            id="{{ option.attrs.id }}"
+            value="{{ option.value }}"
+            name="option.name"
+            {% if option.selected %}checked{% endif %}
+        />
+        <label class="checkbox-label" for="{{ option.attrs.id }}">
+        <div class="checkbox-icon"></div>
+        <div>
+            <i class="fas fa-microchip"></i>
+            {{ option.label }}
+        </div>
+        </label>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</div>
