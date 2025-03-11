@@ -6,7 +6,7 @@
         <input type="checkbox" 
             id="{{ option.attrs.id }}"
             value="{{ option.value }}"
-            name="option.name"
+            name="{{ option.name }}"
             {% if option.selected %}checked{% endif %}
         />
         <label class="checkbox-label" for="{{ option.attrs.id }}">

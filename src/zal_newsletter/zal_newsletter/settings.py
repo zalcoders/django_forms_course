@@ -12,7 +12,9 @@ SECRET_KEY = 'django-insecure-pb5*pzg&2@h58e-3#yb6sd%sgu_cle==6rv$jxf(1d(66*#u_m
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 ALLOWED_HOSTS = []
 
 
@@ -26,9 +28,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'newsletter',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -12,6 +12,8 @@ class SubscriptionModelForm(forms.ModelForm):
         self.fields['agreed_to_poicies'].widget.template_name = "forms/boolean_input.html"
         self.fields['interests'].widget.template_name = "forms/interests_input.html"
 
+        self.renderer.form_template_name = "forms/newsletter_form.html"
+
     class Meta:
         model = Subscription
         fields = ['first_name', 'last_name', 'email', 'interests', 'agreed_to_poicies']
@@ -19,12 +21,12 @@ class SubscriptionModelForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': "Your last name",
+                'placeholder': "Your first name",
                 'custom_label': "First Name"
             }),
             'last_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': "Your first name",
+                'placeholder': "Your last name",
                 'custom_label': "Last Name"
             }),
             'email': forms.EmailInput(attrs={

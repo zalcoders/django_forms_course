@@ -4,8 +4,15 @@ from newsletter.models import Subscription
 
 
 def index(request):
-    form = SubscriptionModelForm()
-    return render(request, "newsletter/index.html", {"form": form})
+    submitted = False
+    if request.method == "POST":
+        form = SubscriptionModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            submitted = True
+    else:
+        form = SubscriptionModelForm()
+    return render(request, "newsletter/index.html", {"form": form, "submitted": submitted})
 
 
 def test_view(request):

@@ -301,7 +301,6 @@
       }
       
       .success-message {
-        display: none;
         padding: 2rem;
         background-color: #ecfdf5;
         border-radius: 12px;
@@ -532,8 +531,19 @@
                 <p class="form-subtitle">Stay ahead of the curve with personalized insights and updates delivered straight to your inbox.</p>
               </div>
 
-              <form id="newsletter-form">
+              <form id="newsletter-form" method="post">
+                {% csrf_token %}
                 {{ form }}
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Subscribe Now</button>
+                </div>
+                
+                <div id="success-message" class="success-message mt-4 {% if not submitted %}d-none{% endif %}">
+                  <i class="fas fa-check-circle"></i>
+                  <h3>Thank You for Subscribing!</h3>
+                  <p>Check your inbox soon for exclusive content and special offers.</p>
+                </div>
 
                 <div class="footer">
                   <p>We respect your privacy and will never share your information.</p>
@@ -548,19 +558,5 @@
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Form submission script -->
-    <script>
-      document.getElementById('newsletter-form').addEventListener('submit', function (event) {
-        event.preventDefault()
-      
-        // Here you would typically send the form data to your server
-        // For demonstration, we'll just show the success message
-        document.getElementById('success-message').style.display = 'block'
-      
-        // Scroll to success message
-        document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' })
-      })
-    </script>
   </body>
 </html>

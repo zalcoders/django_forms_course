@@ -2,13 +2,5 @@
   <div class="form-check">
     {% include 'django/forms/widgets/input.html' %}
     <label class="form-check-label" for="{{ widget.attrs.id }}">{{ widget.attrs.custom_label }}</label>
-
-    {% if errors %}
-      <div class="text-danger mt-1">{{ errors }}</div>
-    {% endif %}
-
-    {% if help_text %}
-      <div class="form-text">{{ help_text }}</div>
-    {% endif %}
   </div>
 </div>
