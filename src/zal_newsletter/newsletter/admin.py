@@ -1,3 +1,6 @@
 from django.contrib import admin
+from newsletter.models import Interest, Subscription
 
-# Register your models here.
+
+admin.site.register(Interest)
+admin.site.register(Subscription)
